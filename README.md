@@ -1,7 +1,7 @@
 # Spotify Playlist Downloader
 
 ## Install:
-###Basic
+### Basic
 - python 3.8
 - pip (as last as better)
 

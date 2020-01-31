@@ -2,7 +2,7 @@
 Downloads songs listed on a spotify playlist from youtube. Uses scrapy, selenium and youtube_dl also uses a library called ffmpeg (link below).
 By changing the type inside the spider you can download the entire video and dont convert it.
 
-## Chrome webdriver 79 include, if you have another chrome version you need to download it on: https://chromedriver.chromium.org/downloads
+## Chrome webdriver 79 included, if you have another chrome version you need to download it on: https://chromedriver.chromium.org/downloads
 
 ## Install:
 ### Basic

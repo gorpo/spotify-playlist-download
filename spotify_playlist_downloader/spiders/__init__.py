@@ -1,5 +1,8 @@
 from __future__ import unicode_literals
 import scrapy
+from selenium import webdriver
+
+
 import youtube_dl
 
 ydl = youtube_dl.YoutubeDL({'playlist_items': '1', 'outtmpl': '/downloadedsongs/%(title)s.%(ext)s', 'format': 'mp3', 'audio_format': 'mp3',  'format': 'bestaudio/best',
@@ -12,15 +15,21 @@ ydl = youtube_dl.YoutubeDL({'playlist_items': '1', 'outtmpl': '/downloadedsongs/
 class playlist_spider(scrapy.Spider):
     name ="playlist"
 
+    def __init__(self):
+        self.driver = webdriver.Chrome('chromedriver')
+    
     def start_requests(self):
+        
         url = open("playlist.txt", "r")
         url = url.read()
         yield scrapy.Request(url=url, callback=self.parse)
     
     def parse(self, response):
+        self.driver.get(response.url)
         urls = []
-        for (song, artist) in zip(response.xpath('//span[@class="track-name"]/text()[1]').getall(), response.xpath('//span[@class="artists-albums"]//a//span/text()[1]').getall()):
-            urls.append(self.parse_for_youtube_url(song, artist))
+        for (song, artist) in zip(self.driver.find_elements_by_class_name("tracklist-name"), self.driver.find_elements_by_class_name("tracklist-row__artist-name-link")):
+            urls.append(self.parse_for_youtube_url(song.text, artist.text))
+
         with ydl:
             ydl.download(urls)
 

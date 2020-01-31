@@ -2,7 +2,7 @@
 
 ## Install:
 ### Basic
-- python 3.8
+- python 3.8 ( I haven't tryed yed but i think it would work with older versions too.)
 - pip (as last as better)
 
 ### PIP packages:

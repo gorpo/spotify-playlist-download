@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 import scrapy
 from selenium import webdriver
-
-
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from scrapy.utils.project import get_project_settings
 import youtube_dl
+
 
 ydl = youtube_dl.YoutubeDL({'playlist_items': '1', 'outtmpl': '/downloadedsongs/%(title)s.%(ext)s', 'format': 'mp3', 'audio_format': 'mp3',  'format': 'bestaudio/best',
     'postprocessors': [{
@@ -16,7 +18,14 @@ class playlist_spider(scrapy.Spider):
     name ="playlist"
 
     def __init__(self):
-        self.driver = webdriver.Chrome('chromedriver')
+        settings=get_project_settings()
+        chrome_options = webdriver.ChromeOptions()
+        if settings.get('HEADLESS'):
+            chrome_options.add_argument('--headless')
+        if settings.get('DOWNLOAD_IMGS'):
+            prefs = {"profile.managed_default_content_settings.images": 2}
+            chrome_options.add_experimental_option("prefs", prefs)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
     
     def start_requests(self):
         

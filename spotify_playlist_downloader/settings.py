@@ -15,6 +15,12 @@ SPIDER_MODULES = ['spotify_playlist_downloader.spiders']
 NEWSPIDER_MODULE = 'spotify_playlist_downloader.spiders'
 
 
+# Start selenium in headless mode
+HEADLESS = False
+
+# Tells if selenium will download images - used to speed up loading
+IGNORE_IMGS = False
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'spotify_playlist_downloader (+http://www.yourdomain.com)'
 
